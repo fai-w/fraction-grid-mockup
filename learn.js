@@ -787,7 +787,9 @@ function confirmCols() {
     });
     currentIndex = pastStates.length - 1;
 
-    enableUndo();
+    undoBtn.disabled = false;
+    redoBtn.disabled = true;
+
     repaintHighlight();
 }
 
@@ -835,7 +837,9 @@ function confirmRows() {
     });
     currentIndex = pastStates.length - 1;
 
-    enableUndo();
+    undoBtn.disabled = false;
+    redoBtn.disabled = true;
+
     repaintHighlight();
 }
 
@@ -998,21 +1002,18 @@ function handleUndo() {
 }
 
 function handleRedo() {
-    if (currentIndex >= pastStates.length - 1) return;
+    // nothing to redo → disable the button and bail out
+    if (currentIndex >= pastStates.length - 1) {
+        redoBtn.disabled = true;
+        return;
+    }
+
+    // advance and restore
     currentIndex++;
     restoreState(pastStates[currentIndex]);
-}
 
-function handleUndo() {
-    if (currentIndex === 0) return;
-    currentIndex--;
-    restoreState(pastStates[currentIndex]);
-}
-
-function handleRedo() {
-    if (currentIndex >= pastStates.length - 1) return;
-    currentIndex++;
-    restoreState(pastStates[currentIndex]);
+    // restoreState already re-toggles undo/redo for you, but just in case:
+    redoBtn.disabled = (currentIndex >= pastStates.length - 1);
 }
 
 function restoreState(s) {
@@ -1048,10 +1049,6 @@ function restoreState(s) {
 
     // repaint the history + highlight currentIndex
     repaintHighlight();
-}
-
-function enableUndo() {
-    undoBtn.disabled = false;
 }
 
 function disableGridControls() {
