@@ -661,7 +661,7 @@
 
         async function loadItemBank() {
             try {
-                const resp = await fetch('fractions.json');
+                const resp = await fetch('practice-items.json');
                 itemBank = await resp.json();
                 // now that we have data, kick off your first problem:
                 loadNewProblem();
