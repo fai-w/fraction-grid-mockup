@@ -1,0 +1,17 @@
+[
+    { "num": 2,  "den": 5,  "targetDen": 10},
+    { "num": 2,  "den": 4,  "targetDen": 10},
+    { "num": 12,  "den": 24, "targetDen": 10},
+    { "num": 18,  "den": 45, "targetDen": 10},
+
+    { "num": 12,  "den": 25,  "targetDen": 100},
+    { "num": 21,  "den": 75,  "targetDen": 100},
+    { "num": 52,  "den": 80, "targetDen": 100},
+    { "num": 150,  "den": 625, "targetDen": 100},
+
+    { "num": 12,  "den": 25,  "targetDen": 1000},
+    { "num": 21,  "den": 75,  "targetDen": 1000},
+    { "num": 52,  "den": 80, "targetDen": 1000},
+    { "num": 150,  "den": 625, "targetDen": 1000}
+  ]
+  

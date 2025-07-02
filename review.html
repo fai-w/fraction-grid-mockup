@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ทบทวนเรื่องเศษส่วนที่เท่ากัน</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            loader: { load: ['[tex]/color'] },
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                packages: { '[+]': ['color'] }
+            }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <!-- BACK LINK -->
+    <a href="landing.html" class="back-link">กลับหน้าหลัก</a>
+
+    <!-- PROBLEM DISPLAY -->
+    <section id="problem-display">
+        <div id="problem-intro">
+            แบ่งเศษส่วนเพื่อหาจำนวนที่แทนด้วย \( \Box \)
+        </div>
+        <div id="fraction-display"></div>
+    </section>
+
+    <!-- GRID + WORKSPACE -->
+    <section class="grid-sets-container">
+        <div class="grid-set">
+            <div class="top-control">
+                แบ่งเป็น
+                <span id="columns-display" class="display-box"></span>
+                <button id="columns-up">▲</button>
+                <button id="columns-down">▼</button>
+                หลักที่เท่ากัน
+            </div>
+
+            <div class="container">
+                <div class="left-control">
+                    แบ่งเป็น
+                    <span id="rows-display" class="display-box"></span>
+                    <button id="rows-up">▲</button>
+                    <button id="rows-down">▼</button>
+                    แถวที่เท่ากัน
+                </div>
+
+                <div class="grid-wrapper" id="grid-wrapper">
+                    <div id="shading-grid" class="grid"></div>
+                    <div id="overlay-grid" class="grid"></div>
+                    <div id="grid-1" class="grid"></div>
+                </div>
+
+                <div class="workspace-right">
+                    <div id="preview-container">
+                        <span id="preview-math"></span>
+                        <div id="preview-controls"></div>
+                    </div>
+
+                    <div class="history-box">
+                        <div id="history-entries" class="history-entries"></div>
+                        <div class="history-controls">
+                            <button id="undo-btn" disabled>ย้อนกลับ</button>
+                            <button id="redo-btn" disabled>ทำซ้ำ</button>
+                            <button id="reset-btn">เริ่มใหม่</button>
+                            <button id="ready-btn">เติมคำตอบ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODALS -->
+    <div id="answer-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="plain-fraction-row">
+                <div class="html-fraction">
+                    <div class="numerator" id="left-num"></div>
+                    <div class="fraction-bar"></div>
+                    <div class="denominator" id="left-den"></div>
+                </div>
+                <span>=</span>
+                <div class="html-fraction" id="right-fraction"></div>
+            </div>
+            <p id="feedback-msg" class="feedback-msg hidden"></p>
+            <div class="modal-buttons">
+                <button id="submit-answer">ตกลง</button>
+                <button id="cancel-answer">ยกเลิก</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="alert-modal" class="modal hidden">
+        <div class="modal-content">
+            <p id="alert-text"></p>
+            <div class="modal-buttons">
+                <button id="alert-ok">ตกลง</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="review-complete-modal" class="modal hidden">
+        <div class="modal-content">
+            <p>รู้เรื่องเศษส่วนที่เท่ากันดีแล้ว ไปเรียนรู้เรื่องการเขียนเศษส่วนในรูปทศนิยมต่อเลย</p>
+            <div class="modal-buttons">
+                <button id="go-learn">ไปเลย!</button>
+                <button id="stay-review">ยังก่อน ทบทวนต่อ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- External JS -->
+    <script src="review.js"></script>
+</body>
+
+</html>
