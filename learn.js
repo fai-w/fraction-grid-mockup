@@ -78,7 +78,7 @@ function initLearnSequence() {
         }
         return freshItems;
     }
-    
+
     currentProblemIndex = 0;
 }
 
@@ -120,7 +120,7 @@ document.getElementById('stay-learn').onclick = () => {
         // ② subsequent times: just go to the next one
         nextProblem();
     }
-};  
+};
 
 function safeTypeset(nodes) {
     if (window.MathJax && typeof MathJax.typesetPromise === 'function') {
@@ -605,22 +605,33 @@ function askForNumerator() {
     const decimalExpected = (START_NUM / START_DEN).toFixed(3).replace(/\.?0+$/, '');
 
     decimalRow.innerHTML = `
-      <div style="text-align:center; margin-top:12px;">
-        และ \\(\\frac{${START_NUM}}{${START_DEN}}\\) เขียนในรูปทศนิยมได้ว่า
-        <input
-          type="text"
-          id="decimal-input"
-          style="width: 80px; text-align: center; margin-left: 8px;"
-          inputmode="decimal"
-          oninput="
-            this.value = this.value
-              .replace(/[^0-9.]/g, '')         // allow digits and decimal point
-              .replace(/(\\..*)\\./g, '$1');   // only allow ONE decimal point
-          "
-        />
-      </div>
-    `;
+    <div style="text-align:center; margin-top:12px;">
+      และ \\(\\frac{${START_NUM}}{${START_DEN}}\\) เขียนในรูปทศนิยมได้ว่า
+      <input
+        type="text"
+        id="decimal-input"
+        style="width: 80px; text-align: center; margin-left: 8px;"
+        inputmode="decimal"
+        oninput="
+          // 1) strip non-digits/dot and force at most one dot
+          let v = this.value
+            .replace(/[^0-9.]/g, '')
+            .replace(/(\\..*)\\./g, '$1');
+  
+          // 2) if there’s a fractional part, truncate to 3 digits
+          if (v.includes('.')) {
+            const [intPart, fracPart] = v.split('.');
+            v = intPart + '.' + fracPart.slice(0, 3);
+          }
+  
+          // 3) write it back
+          this.value = v;
+        "
+      />
+    </div>
+  `;
     MathJax.typesetPromise([decimalRow]);
+
 
     feedback.classList.add('hidden');
     submitBtn.onclick = null;
@@ -644,7 +655,7 @@ function askForNumerator() {
 
         submitBtn.onclick = () => {
             modal.classList.add('hidden');
-            nextProblem(); 
+            nextProblem();
         };
 
     } else {

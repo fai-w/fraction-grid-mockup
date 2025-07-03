@@ -141,7 +141,7 @@
 
         .feedback-msg {
             font-size: 1.1rem;
-            margin: 10px 0 0;
+            margin: 10px 0 10px;
             color: green;
         }
 
@@ -251,9 +251,9 @@
                 </div>
             </div>
             <p id="feedback-msg" class="feedback-msg hidden"></p>
-            <div style="display:flex; gap:12px; justify-content:center;">
+            <div style="display:flex; gap:12px; justify-content:center; margin-top: 10px;">
                 <button id="submit-answer">ตกลง</button>
-                <!-- <button id="cancel-answer">ยกเลิก</button> -->
+                <button id="cancel-answer">ยกเลิก</button>
             </div>
         </div>
     </div>
@@ -574,8 +574,25 @@
         type="text"
         id="decimal-input"
         style="width: 80px; font-size: 1rem; padding: 4px; text-align: center;"
-        oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
         inputmode="decimal"
+        oninput="
+          // strip out anything except digits and dot
+          let v = this.value.replace(/[^0-9.]/g, '');
+
+          // allow only one dot
+          const parts = v.split('.');
+          if (parts.length > 2) {
+            v = parts.shift() + '.' + parts.slice(1).join('');
+          }
+
+          // if there's a fractional part, trim it to 3 digits
+          if (parts[1]) {
+            parts[1] = parts[1].slice(0, 3);
+            v = parts[0] + '.' + parts[1];
+          }
+
+          this.value = v;
+        "
       />
     </div>
   `;
@@ -650,9 +667,9 @@
                 }
             };
 
-            /*             cancelBtn.onclick = () => {
-                            modal.classList.add('hidden');
-                        }; */
+            cancelBtn.onclick = () => {
+                modal.classList.add('hidden');
+            };
 
             modal.classList.remove('hidden');
         }
